@@ -22,52 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef SFGE_P2MATRIX_H
-#define SFGE_P2MATRIX_H
+#include <p2matrix.h>
+#include <iostream>
 
-#include <p2vector.h>
-
-struct p2Mat22
+int main()
 {
-	p2Mat22();
-	p2Mat22(p2Vec2 r1, p2Vec2 r2) ;
+	p2Mat33 mat1(p2Vec3(-1,2,3), p2Vec3(-2,1,4), p2Vec3(2,1,5));
+	p2Mat33 mat2 = mat1.Invert();
+		//std::cout << v1.x << v1.y << v1.z;
+	std::cout << mat2.columns[0].x << "\n" << mat2.columns[0].y << "\n" << mat2.columns[0].z << "\n" << mat2.columns[1].x << "\n" << mat2.columns[1].y << "\n" << mat2.columns[1].z << "\n" << mat2.columns[2].x << "\n" << mat2.columns[2].y << "\n" << mat2.columns[2].z << "\n";
+	
+	
+	system("PAUSE");
 
-	p2Mat22 operator+(p2Mat22 m1);
-	p2Mat22 operator-(p2Mat22 m1);
-	p2Mat22 operator*(p2Mat22 m1);
-	p2Vec2 operator*(p2Vec2 v);
-	p2Mat22 operator*(float f);
-	p2Mat22 operator/(float f);
-	/**
-	* \brief Calculate the invert of the 2x2 matrix
-	*/
-	p2Mat22 Invert();
-	float GetDeterminant();
-
-	p2Vec2 columns[2] = {};
-};
-
-struct p2Mat33
-{
-	p2Mat33();
-	p2Mat33(p2Vec3 r1, p2Vec3 r2, p2Vec3 r3);
-
-	p2Mat33 operator+(p2Mat33 m1);
-	p2Mat33 operator-(p2Mat33 m1);
-	p2Mat33 operator*(p2Mat33 m1);
-	p2Vec3 operator*(p2Vec3);
-	p2Mat33 operator*(float f);
-	p2Mat33 operator/(float f);
-	/**
-	* \brief Calculate the invert of the 3x3 matrix
-	*/
-	p2Mat33 Invert();
-	/**
-	* \brief Calculate the determinant
-	*/
-	float GetDeterminant();
-
-	p2Vec3 columns[3] = {}; 
-};
-
-#endif
+	
+}
