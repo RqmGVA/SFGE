@@ -26,10 +26,10 @@ SOFTWARE.
 
 p2Vec2 p2AABB::GetCenter()
 {
-	return p2Vec2();
+	return p2Vec2((bottomLeft.x + topRight.x), (topRight.y + bottomLeft.y)) / 2.0f;
 }
 
-p2Vec2 p2AABB::GetExtends()
+p2Vec2 p2AABB::GetHalfExtends()
 {
-	return p2Vec2();
+	return p2Vec2((topRight - bottomLeft) / 2);
 }

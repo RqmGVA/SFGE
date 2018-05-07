@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include <p2world.h>
+#include <p2body.h>
+#include <p2contact.h>
 
 
 p2World::p2World(p2Vec2 gravity): m_Gravity(gravity)
@@ -31,11 +33,17 @@ p2World::p2World(p2Vec2 gravity): m_Gravity(gravity)
 
 void p2World::Step(float dt)
 {
+	for (std::list<p2Body>::iterator it = bodies.begin(); it != bodies.end(); it++)
+	{
+		it->SetPosition(it->GetLinearVelocity() * dt);
+	}
 }
 
 p2Body * p2World::CreateBody(p2BodyDef* bodyDef)
 {
-	return nullptr;
+	p2Body newBody = p2Body(bodyDef);
+	bodies.push_front(newBody);
+	return&(*bodies.begin());
 }
 
 void p2World::SetContactListener(p2ContactListener * contactListener)

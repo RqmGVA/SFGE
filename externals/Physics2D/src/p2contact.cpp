@@ -24,12 +24,47 @@ SOFTWARE.
 
 #include <p2contact.h>
 
+p2Contact::p2Contact(p2Collider * colliderA, p2Collider * colliderB)
+{
+	this->colliderA = colliderA;
+	this->colliderB = colliderB;
+}
+
 p2Collider * p2Contact::GetColliderA()
 {
-	return nullptr;
+	return colliderA;
 }
 
 p2Collider * p2Contact::GetColliderB()
 {
-	return nullptr;
+	return colliderB;
+}
+
+void p2ContactManager::CreateContact(p2Contact* contact)
+{
+	contacts.push_front(*contact);
+}
+
+void p2ContactManager::DeleteContact(p2Contact * contact)
+{
+	for (std::list<p2Contact>::iterator it = contacts.begin(); it != contacts.end(); it++)
+	{
+		if (it->GetColliderA() == contact->GetColliderA() && it->GetColliderB() == contact->GetColliderB())
+		{
+			contacts.erase(it);
+		}
+	}
+}
+
+bool p2ContactManager::IsInContact(p2Contact * contact)
+{
+	for (std::list<p2Contact>::iterator it = contacts.begin(); it != contacts.end(); it++)
+	{
+		if (it->GetColliderA() == contact->GetColliderA() && it->GetColliderB() == contact->GetColliderB())
+		{
+			return true;
+		}
+		else
+			return false;
+	}
 }

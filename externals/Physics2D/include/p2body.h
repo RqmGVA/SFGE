@@ -26,6 +26,7 @@ SOFTWARE.
 #define SFGE_P2BODY_H
 
 #include <p2aabb.h>
+#include <list>
 
 class p2Collider;
 struct p2ColliderDef;
@@ -42,6 +43,7 @@ enum class p2BodyType
 */
 struct p2BodyDef
 {
+	float mass;
 	p2BodyType type;
 	p2Vec2 position;
 	p2Vec2 linearVelocity;
@@ -55,13 +57,27 @@ struct p2BodyDef
 class p2Body
 {
 public:
+
+
+	p2Body::p2Body(p2BodyDef* p2BodyDef);
+
 	p2Vec2 GetLinearVelocity();
-	
+
+	void addforce(p2Vec2 force);
+
 	void SetLinearVelocity(p2Vec2 velocity);
 
 	float GetAngularVelocity();
-	
+
 	p2Vec2 GetPosition();
+
+	float GetMass();
+
+	void SetMass(float mass);
+
+	void addBody(p2Body* body);
+
+	void SetPosition(p2Vec2 position);
 	/**
 	* \brief Factory method creating a p2Collider
 	* \param colliderDef p2ColliderDef definition of the collider
@@ -69,10 +85,15 @@ public:
 	*/
 	p2Collider* CreateCollider(p2ColliderDef* colliderDef);
 private:
+	std::list <p2Body> bodies;
+	float mass;
+	p2Vec2 force;
+	p2BodyType type;
 	p2AABB aabb;
 	p2Vec2 position;
 	p2Vec2 linearVelocity;
 	float angularVelocity;
+	p2Collider* collider;
 };
 
 #endif

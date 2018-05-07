@@ -24,10 +24,30 @@ SOFTWARE.
 
 #include <p2shape.h>
 
+p2CircleShape::p2CircleShape()
+{
+}
+
+p2CircleShape::p2CircleShape(float m_Radius)
+{
+	this->m_Radius = m_Radius;
+}
+
 void p2CircleShape::SetRadius(float radius)
 {
+	m_Radius = radius;
+}
+
+p2RectShape::p2RectShape()
+{
+}
+
+p2RectShape::p2RectShape(p2Vec2 m_Size)
+{
+	this->m_Size = m_Size;
 }
 
 void p2RectShape::SetSize(p2Vec2 size)
 {
+	m_Size = size;
 }
