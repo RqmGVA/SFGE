@@ -24,10 +24,11 @@ SOFTWARE.
 #include <p2body.h>
 #include <p2collider.h>
 
-p2Body::p2Body(p2BodyDef* p2BodyDef)
+p2Body::p2Body(p2BodyDef* p2BodyDef, p2World* world)
 {
-	position = p2BodyDef->position;
 
+	this->world = world;
+	position = p2BodyDef->position;
 
 	/*switch (p2BodyType)
 	{
@@ -65,6 +66,24 @@ float p2Body::GetAngularVelocity()
 	return angularVelocity;
 }
 
+bool p2Body::CheckContact(p2Body *)
+{
+		p2Vec2 body1 = this->aabb.GetCenter() - p2Vec2(this->aabb.GetHalfExtends().x, this->aabb.GetHalfExtends().y);
+		p2Vec2 body2 = body->aabb.GetCenter() - p2Vec2(body->aabb.GetHalfExtends().x, body->aabb.GetHalfExtends().y);
+
+
+		if ((body2.x >= body1.x + this->aabb.GetHalfExtends().x * 2) || (body2.x + body->aabb.GetHalfExtends().x * 2 <= body1.x)
+			|| (body2.y >= body1.y + this->aabb.GetHalfExtends().y * 2) || (body2.y + body->aabb.GetHalfExtends().y * 2 <= body1.y))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+
 p2Vec2 p2Body::GetPosition()
 {
 	return position;
@@ -90,8 +109,23 @@ void p2Body::SetPosition(p2Vec2 p)
 	this->position = position + p;
 }
 
+
+
 p2Collider * p2Body::CreateCollider(p2ColliderDef * colliderDef)
 {
-	collider = new p2Collider(*colliderDef);
+	p2Shape* shape = colliderDef->shape;
+
+	if (shape->GetType() == Type::CIRCLE)
+	{
+		p2CircleShape* shapeCircle = dynamic_cast<p2CircleShape>(shape);
+		aabb = p2AABB(position, p2Vec2(shapeCircle->GetRadius(), shapeCircle->GetRadius()));
+	}
+	if (shape->GetType() == Type::RECTANGLE)
+	{
+		p2RectShape shapeRectangle = dynamic_cast<p2RectShape*>(shape);
+		aabb = p2AABB(position, p2Vec2(shapeRectangle->GetSize().x, shapeRectangle->GetSize().y));
+	}
+
+	collider = new p2Collider(colliderDef, this);
 	return collider;
 }

@@ -26,13 +26,25 @@ SOFTWARE.
 #define SFGE_P2SHAPE_H
 
 #include <p2vector.h>
+#include <p2body.h>
+
+enum class Type
+{
+	CIRCLE,
+	RECTANGLE
+};
 
 /**
 * \brief Abstract representation of a shape
 */
 class p2Shape
 {
-
+public:
+	Type GetType();
+	Type type;
+	virtual void SetType(Type type)
+private: 
+	virtual void shape();
 };
 
 /**
@@ -42,11 +54,13 @@ class p2CircleShape : public p2Shape
 {
 public:
 	p2CircleShape();
-	p2CircleShape(float m_Radius);
+	void SetType(Type type)override;
+	p2CircleShape(float m_Radius, Type type);
 	/**
 	* \brief Setter for the radius
 	*/
 	void SetRadius(float radius);
+	float GetRadius();
 private:
 	float m_Radius;
 };
@@ -58,7 +72,8 @@ class p2RectShape : public p2Shape
 {
 public:
 	p2RectShape();
-	p2RectShape(p2Vec2 m_Size);
+	void SetType(Type type)override;
+	p2RectShape(p2Vec2 m_Size, Type type);
 	void SetSize(p2Vec2 size);
 private:
 	p2Vec2 m_Size;

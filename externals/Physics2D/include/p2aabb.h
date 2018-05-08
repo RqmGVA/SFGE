@@ -32,9 +32,8 @@ SOFTWARE.
 */
 struct p2AABB
 {
-	p2Vec2 bottomLeft;
-	p2Vec2 topRight;
-
+public:
+	p2AABB();
 	/**
 	* \brief Calculate the center and return it
 	*/
@@ -43,5 +42,10 @@ struct p2AABB
 	* \brief Calculate the extends and return it
 	*/
 	p2Vec2 GetHalfExtends();
+private:
+	float m_Radius;
+	p2Vec2 m_Size;
+	p2Vec2 bottomLeft;
+	p2Vec2 topRight;
 };
 #endif // !SFGE_P2AABB:H

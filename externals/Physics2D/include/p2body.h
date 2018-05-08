@@ -26,9 +26,11 @@ SOFTWARE.
 #define SFGE_P2BODY_H
 
 #include <p2aabb.h>
+#include <p2world.h>
 #include <list>
 
 class p2Collider;
+class p2World;
 struct p2ColliderDef;
 
 enum class p2BodyType
@@ -48,7 +50,6 @@ struct p2BodyDef
 	p2Vec2 position;
 	p2Vec2 linearVelocity;
 	float gravityScale;
-	
 };
 
 /**
@@ -58,8 +59,7 @@ class p2Body
 {
 public:
 
-
-	p2Body::p2Body(p2BodyDef* p2BodyDef);
+	p2Body::p2Body(p2BodyDef* p2BodyDef, p2World* world);
 
 	p2Vec2 GetLinearVelocity();
 
@@ -69,9 +69,12 @@ public:
 
 	float GetAngularVelocity();
 
+	bool CheckContact(p2Body*);
+
 	p2Vec2 GetPosition();
 
 	float GetMass();
+
 
 	void SetMass(float mass);
 
@@ -94,6 +97,7 @@ private:
 	p2Vec2 linearVelocity;
 	float angularVelocity;
 	p2Collider* collider;
+	p2World* world;
 };
 
 #endif

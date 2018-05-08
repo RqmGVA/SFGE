@@ -30,6 +30,8 @@ SOFTWARE.
 #include <p2contact.h>
 #include <list>
 
+
+class p2Body;
 /**
 * \brief Representation of the physical world in meter
 */
@@ -52,6 +54,7 @@ public:
 private:
 	p2Vec2 m_Gravity;
 	std::list <p2Body> bodies;
+	p2ContactListener* listener;
 };
 
 #endif

@@ -33,6 +33,8 @@ p2World::p2World(p2Vec2 gravity): m_Gravity(gravity)
 
 void p2World::Step(float dt)
 {
+
+	//I wanted to do a test here : show "Contact" on the console if the both AABB of test_contact collide, but too late
 	for (std::list<p2Body>::iterator it = bodies.begin(); it != bodies.end(); it++)
 	{
 		it->SetPosition(it->GetLinearVelocity() * dt);
@@ -41,11 +43,12 @@ void p2World::Step(float dt)
 
 p2Body * p2World::CreateBody(p2BodyDef* bodyDef)
 {
-	p2Body newBody = p2Body(bodyDef);
+	p2Body newBody = p2Body(bodyDef, this);
 	bodies.push_front(newBody);
 	return&(*bodies.begin());
 }
 
 void p2World::SetContactListener(p2ContactListener * contactListener)
 {
+	listener = contactListener;
 }

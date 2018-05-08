@@ -26,11 +26,19 @@ SOFTWARE.
 
 p2CircleShape::p2CircleShape()
 {
+	p2CircleShape::SetType(Type::CIRCLE);
 }
 
-p2CircleShape::p2CircleShape(float m_Radius)
+void p2CircleShape::SetType(Type type)
 {
+	p2Shape::type = type;
+}
+
+p2CircleShape::p2CircleShape(float m_Radius, Type type)
+{
+	type = Type::CIRCLE;
 	this->m_Radius = m_Radius;
+	this->type = type;
 }
 
 void p2CircleShape::SetRadius(float radius)
@@ -38,16 +46,34 @@ void p2CircleShape::SetRadius(float radius)
 	m_Radius = radius;
 }
 
-p2RectShape::p2RectShape()
+float p2CircleShape::GetRadius()
 {
+	return m_Radius;
 }
 
-p2RectShape::p2RectShape(p2Vec2 m_Size)
+p2RectShape::p2RectShape()
 {
+	p2RectShape::SetType(Type::RECTANGLE);
+}
+
+void p2RectShape::SetType(Type type)
+{
+	p2RectShape::type = type;
+}
+
+p2RectShape::p2RectShape(p2Vec2 m_Size, Type type)
+{
+	type = Type::RECTANGLE;
 	this->m_Size = m_Size;
+	this->type = type;
 }
 
 void p2RectShape::SetSize(p2Vec2 size)
 {
 	m_Size = size;
+}
+
+Type p2Shape::GetType()
+{
+	return type;
 }

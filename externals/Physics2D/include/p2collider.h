@@ -27,6 +27,7 @@ SOFTWARE.
 #define SFGE_P2COLLIDER_H
 
 #include <p2shape.h>
+#include <p2body.h>
 
 /**
 * \brief Struct defining a p2Collider when creating one
@@ -46,7 +47,9 @@ struct p2ColliderDef
 class p2Collider
 {
 public:
-	p2Collider(p2ColliderDef colliderDef);
+	p2Collider();
+	p2Collider(p2ColliderDef colliderDef, p2Body* body);
+	~p2Collider();
 	/**
 	* \brief Check if the p2Collider is a sensor
 	*/
@@ -62,6 +65,7 @@ private:
 	p2Shape* shape;
 	float restitution;
 	bool isSensor;
+	p2Body* m_body;
 };
 
 
